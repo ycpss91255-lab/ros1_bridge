@@ -258,7 +258,7 @@ CMD ["ros2", "run", "ros1_bridge", "parameter_bridge"]
 
 ############################## devel-test (ephemeral) ##############################
 # Resolves to test-tools:local (local ./build.sh builds Dockerfile.test-tools
-# into the host Docker daemon) or ghcr.io/ycpss91255-docker/test-tools:vX.Y.Z
+# into the host Docker daemon) or ghcr.io/ycpss91255-lab/test-tools:vX.Y.Z
 # (CI passes the matching template tag via --build-arg TEST_TOOLS_IMAGE=...).
 FROM ${TEST_TOOLS_IMAGE} AS test-tools-stage
 

@@ -6,7 +6,7 @@
 # Pure -j$(nproc) OOMs on small-memory targets (Jetson Nano 4 GB,
 # Jetson Orin 8 GB). Heuristic: min(nproc, mem_gb / 2). Override
 # via BUILD_JOBS env var when the user knows their constraints.
-# Refs ycpss91255-docker/ros1_bridge#79.
+# Refs ycpss91255-lab/ros1_bridge#79.
 set -euo pipefail
 
 main() {

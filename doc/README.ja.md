@@ -1,6 +1,6 @@
 # ROS 1 Bridge Docker Environment
 
-[![CI](https://github.com/ycpss91255-docker/ros1_bridge/actions/workflows/main.yaml/badge.svg)](https://github.com/ycpss91255-docker/ros1_bridge/actions/workflows/main.yaml) [![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](../LICENSE)
+[![CI](https://github.com/ycpss91255-lab/ros1_bridge/actions/workflows/main.yaml/badge.svg)](https://github.com/ycpss91255-lab/ros1_bridge/actions/workflows/main.yaml) [![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](../LICENSE)
 
 ROS 1/2 ブリッジコンテナ、**Humble + Jazzy のデュアルターゲット** — `ros:${ROS2_DISTRO}-ros-base` をベースに Noetic `ros_comm` と `ros1_bridge` をソースビルド。Multi-arch（amd64 / arm64）。
 
@@ -65,7 +65,7 @@ Fast-DDS のメジャーバージョン差 + REP-2011 type-hash 不一致によ�
 `ros1_bridge` をソースビルドし、`ARG ROS2_DISTRO=humble|jazzy` で
 ターゲットを選択、multi-arch（amd64 + arm64、Jetson 含む）対応。
 詳細な migration rationale は
-[#53](https://github.com/ycpss91255-docker/ros1_bridge/issues/53) を参照。
+[#53](https://github.com/ycpss91255-lab/ros1_bridge/issues/53) を参照。
 
 ## 特徴
 
@@ -113,7 +113,7 @@ tag（`yunchien/ros1_bridge:devel` 等）は distro を跨いで変わらず、
 を実行し、TUI で `[build] arg_4` を変更します。
 
 CI は `.github/workflows/main.yaml` の matrix で両 distro を並列 build します。
-setup.conf の変更はローカル build のみに影響し、`ghcr.io/ycpss91255-docker/ros1_bridge-{humble,jazzy}`
+setup.conf の変更はローカル build のみに影響し、`ghcr.io/ycpss91255-lab/ros1_bridge-{humble,jazzy}`
 へ公開される image は setup.conf に依らず常に matrix が決定します。
 
 ## 使い方
@@ -161,7 +161,7 @@ make exec bash
 `bridge.yaml` は **バージョン管理されません** — オペレーターが `config/`
 から選んで張る per-clone symlink です。ビルド時に symlink が存在しない
 または壊れている場合、Dockerfile は `config/ros1_bridge/demo_bridge.yaml` に自動で
-フォールバックします（[#65](https://github.com/ycpss91255-docker/ros1_bridge/issues/65) 修正）。
+フォールバックします（[#65](https://github.com/ycpss91255-lab/ros1_bridge/issues/65) 修正）。
 したがって fresh clone でもそのままビルド可能です。別の設定を選ぶには：
 
 ```bash
