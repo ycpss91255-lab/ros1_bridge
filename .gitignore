@@ -7,7 +7,7 @@ coverage/
 bridge.yaml
 
 # Claude Code session state when launched inside this sub-repo.
-# Workspace-level Claude config lives in ycpss91255-docker/claude-workspace.
+# Workspace-level Claude config lives in ycpss91255-lab/claude-workspace.
 .claude
 CLAUDE.md
 
@@ -20,7 +20,19 @@ setup.conf.local
 
 .docker.xauth
 
-# managed by template: [logging] local_path (do not remove)
+# managed by template: [logging] local_path begin (do not remove)
 /log/
+# managed by template: [logging] local_path end (do not remove)
 
 .env.generated
+.env.local
+.env.local.toml
+.env.local.bak
+env.local.toml
+.setup.conf.bak
+setup.toml.bak
+.setup.conf.local
+.setup.conf.local.bak
+setup.local.toml
+log/
+/deploy/

@@ -26,7 +26,7 @@
 | Test | Description |
 |------|-------------|
 | `bridge.yaml exists` | `/bridge.yaml` exists |
-| `bridge.yaml is non-empty (fresh-clone fallback regression #65)` | `/bridge.yaml` is non-empty; covers the Dockerfile-internal fallback to `config/ros1_bridge/demo_bridge.yaml` when no `bridge.yaml` symlink exists in build context (closes [#65](https://github.com/ycpss91255-docker/ros1_bridge/issues/65)) |
+| `bridge.yaml is non-empty (fresh-clone fallback regression #65)` | `/bridge.yaml` is non-empty; covers the Dockerfile-internal fallback to `config/ros1_bridge/demo_bridge.yaml` when no `bridge.yaml` symlink exists in build context (closes [#65](https://github.com/ycpss91255-lab/ros1_bridge/issues/65)) |
 | `entrypoint.sh exists and is executable` | `/entrypoint.sh` is executable |
 | `ros_entrypoint.sh exists and is executable` | `/ros_entrypoint.sh` is executable |
 | `ros_entrypoint.sh sources both ROS environments` | Running `/ros_entrypoint.sh` yields `ROS_DISTRO=${ROS2_DISTRO}` (ROS 1 sourced first, then ROS 2 + `/bridge_ws/install`) |
@@ -63,7 +63,7 @@
 
 | Test | Description |
 |------|-------------|
-| `colcon_build_bridge.sh: --print-jobs emits auto-detected -j<N> line` | `/tmp/colcon_build_bridge.sh --print-jobs` re-runs the `min(nproc, mem_gb/2)` heuristic without invoking colcon and prints `[colcon] auto-detected -j<N> (cpu=…, mem=…GB)`. Regression guard for the auto-detect path (closes [#79](https://github.com/ycpss91255-docker/ros1_bridge/issues/79)) |
+| `colcon_build_bridge.sh: --print-jobs emits auto-detected -j<N> line` | `/tmp/colcon_build_bridge.sh --print-jobs` re-runs the `min(nproc, mem_gb/2)` heuristic without invoking colcon and prints `[colcon] auto-detected -j<N> (cpu=…, mem=…GB)`. Regression guard for the auto-detect path (closes [#79](https://github.com/ycpss91255-lab/ros1_bridge/issues/79)) |
 | `colcon_build_bridge.sh: BUILD_JOBS env override honored` | `BUILD_JOBS=1` env override bypasses the heuristic and emits `-j1` verbatim |
 
 ## template/test/smoke/script_help.bats (27)

@@ -1,6 +1,6 @@
 # ROS 1 Bridge Docker Environment
 
-[![CI](https://github.com/ycpss91255-docker/ros1_bridge/actions/workflows/main.yaml/badge.svg)](https://github.com/ycpss91255-docker/ros1_bridge/actions/workflows/main.yaml) [![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](./LICENSE)
+[![CI](https://github.com/ycpss91255-lab/ros1_bridge/actions/workflows/main.yaml/badge.svg)](https://github.com/ycpss91255-lab/ros1_bridge/actions/workflows/main.yaml) [![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](./LICENSE)
 
 ROS 1/2 bridge container with dual Humble + Jazzy targets — `ros:${ROS2_DISTRO}-ros-base` plus source-built Noetic `ros_comm` and `ros1_bridge`. Multi-arch (amd64 / arm64).
 
@@ -63,7 +63,7 @@ due to Fast-DDS major-version skew + REP-2011 type-hash mismatches.
 This repo replaces it with a single Dockerfile that source-builds
 Noetic `ros_comm` + `ros1_bridge` on top of `ros:${ROS2_DISTRO}-ros-base`,
 selectable via `ARG ROS2_DISTRO=humble|jazzy`, multi-arch (amd64 + arm64
-including Jetson). See [#53](https://github.com/ycpss91255-docker/ros1_bridge/issues/53)
+including Jetson). See [#53](https://github.com/ycpss91255-lab/ros1_bridge/issues/53)
 for the full migration rationale.
 
 ## Features
@@ -113,7 +113,7 @@ frontend) and change `[build] arg_4` there.
 
 CI builds both distros in parallel via the matrix in `.github/workflows/main.yaml`,
 so a setup.conf change only affects local builds — published images at
-`ghcr.io/ycpss91255-docker/ros1_bridge-{humble,jazzy}` come from the matrix
+`ghcr.io/ycpss91255-lab/ros1_bridge-{humble,jazzy}` come from the matrix
 regardless of what `setup.conf` says.
 
 ## Usage
@@ -160,7 +160,7 @@ make exec bash
 `bridge.yaml` is **not committed** — it is a per-clone symlink the operator
 points at one of the configs in `config/`. If the symlink is missing or
 broken at build time, the Dockerfile falls back to `config/ros1_bridge/demo_bridge.yaml`
-(closes [#65](https://github.com/ycpss91255-docker/ros1_bridge/issues/65)),
+(closes [#65](https://github.com/ycpss91255-lab/ros1_bridge/issues/65)),
 so a fresh clone builds out of the box. To pick a different config:
 
 ```bash

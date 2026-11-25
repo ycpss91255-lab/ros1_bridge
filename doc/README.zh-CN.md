@@ -1,6 +1,6 @@
 # ROS 1 Bridge Docker Environment
 
-[![CI](https://github.com/ycpss91255-docker/ros1_bridge/actions/workflows/main.yaml/badge.svg)](https://github.com/ycpss91255-docker/ros1_bridge/actions/workflows/main.yaml) [![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](../LICENSE)
+[![CI](https://github.com/ycpss91255-lab/ros1_bridge/actions/workflows/main.yaml/badge.svg)](https://github.com/ycpss91255-lab/ros1_bridge/actions/workflows/main.yaml) [![License](https://img.shields.io/badge/License-Apache--2.0-blue?style=flat-square)](../LICENSE)
 
 ROS 1/2 bridge 容器，**Humble + Jazzy 双 target** — `ros:${ROS2_DISTRO}-ros-base` 加 source-build Noetic `ros_comm` 与 `ros1_bridge`。Multi-arch（amd64 / arm64）。
 
@@ -63,7 +63,7 @@ Open Robotics 从未在 focal 之外发布 `ros-noetic-*` debs，且
 `ros:${ROS2_DISTRO}-ros-base` 之上 source-build Noetic `ros_comm` +
 `ros1_bridge`，通过 `ARG ROS2_DISTRO=humble|jazzy` 选择目标，
 multi-arch（amd64 + arm64 含 Jetson）。完整 migration rationale 见
-[#53](https://github.com/ycpss91255-docker/ros1_bridge/issues/53)。
+[#53](https://github.com/ycpss91255-lab/ros1_bridge/issues/53)。
 
 ## 特性
 
@@ -110,7 +110,7 @@ make build && make run
 改 `[build] arg_4`。
 
 CI 通过 `.github/workflows/main.yaml` 的 matrix 同时 build 两个 distro，所以
-setup.conf 改动只影响本地 build；发布到 `ghcr.io/ycpss91255-docker/ros1_bridge-{humble,jazzy}`
+setup.conf 改动只影响本地 build；发布到 `ghcr.io/ycpss91255-lab/ros1_bridge-{humble,jazzy}`
 的 image 跟 setup.conf 无关，永远由 matrix 决定。
 
 ## 使用方式
@@ -155,7 +155,7 @@ make exec bash
 
 `bridge.yaml` **不纳入版本控制** — 它是 per-clone symlink，由操作者从
 `config/` 挑一份指过去。构建时若 symlink 不存在或断裂，Dockerfile 会
-自动 fallback 到 `config/ros1_bridge/demo_bridge.yaml`（修 [#65](https://github.com/ycpss91255-docker/ros1_bridge/issues/65)），
+自动 fallback 到 `config/ros1_bridge/demo_bridge.yaml`（修 [#65](https://github.com/ycpss91255-lab/ros1_bridge/issues/65)），
 所以 fresh clone 也能直接 build。要挑其他配置：
 
 ```bash
