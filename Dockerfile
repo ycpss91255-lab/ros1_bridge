@@ -18,6 +18,7 @@ ARG TEST_TOOLS_IMAGE="test-tools:local"
 # keeps source + intermediate trees so downstream `devel` can reuse
 # them for re-build / debug. Runtime stage does NOT inherit from this
 # stage; it COPYs only the install trees out.
+# hadolint ignore=DL3006
 FROM ${IMAGE} AS builder
 
 ARG ROS2_DISTRO
@@ -127,7 +128,7 @@ ARG BRIDGE_FILE="bridge.yaml"
 COPY --chmod=0755 script/entrypoint.sh script/ros_entrypoint.sh /
 # Base v0.32.0+ ships the [logging] tee helper into a stable in-image path
 # so entrypoint.sh can source it un-guarded; refs base#368, base PR #372.
-COPY --chmod=0755 .base/script/docker/runtime/logging.sh /usr/local/lib/base/logging.sh
+COPY --chmod=0755 .base/dist/script/docker/runtime/ /usr/local/lib/base/
 # Demo helpers land in /root/demo/ -- combined with WORKDIR /root/demo below,
 # users `./exec.sh` into the container, land directly inside this folder and
 # `ls` shows the 4 demo scripts immediately. Closes #70.
@@ -173,6 +174,7 @@ CMD ["bash"]
 # If the smoke test surfaces a missing .so at `parameter_bridge` load
 # (ldd unresolved), add the minimum apt package here — do NOT regress
 # to installing the full builder dep set.
+# hadolint ignore=DL3006
 FROM ${IMAGE} AS runtime
 
 ARG ROS2_DISTRO
@@ -232,7 +234,7 @@ COPY --chmod=0755 script/entrypoint.sh script/ros_entrypoint.sh /
 # Runtime starts FROM ${IMAGE} (fresh base, not FROM devel), so the
 # [logging] helper COPY from devel does not propagate — re-COPY here.
 # Refs base#368, base PR #372.
-COPY --chmod=0755 .base/script/docker/runtime/logging.sh /usr/local/lib/base/logging.sh
+COPY --chmod=0755 .base/dist/script/docker/runtime/ /usr/local/lib/base/
 COPY --chmod=0755 \
     script/demo/ros1_server.sh script/demo/ros1_client.sh \
     script/demo/ros2_server.sh script/demo/ros2_client.sh \
@@ -260,6 +262,7 @@ CMD ["ros2", "run", "ros1_bridge", "parameter_bridge"]
 # Resolves to test-tools:local (local ./build.sh builds Dockerfile.test-tools
 # into the host Docker daemon) or ghcr.io/ycpss91255-lab/test-tools:vX.Y.Z
 # (CI passes the matching template tag via --build-arg TEST_TOOLS_IMAGE=...).
+# hadolint ignore=DL3006
 FROM ${TEST_TOOLS_IMAGE} AS test-tools-stage
 
 FROM devel AS devel-test
@@ -274,10 +277,11 @@ COPY Dockerfile /lint/Dockerfile
 # base v0.28.0+ split _lib.sh into focused sub-libs under script/docker/lib/.
 # _lib.sh now sources `${_lib_dir}/lib/{log,env,conf,compose,config_summary}.sh`,
 # so the lint stage needs the `lib/` subdir alongside the umbrella loader.
-COPY .base/script/docker/lib/ /lint/lib/
+COPY .base/dist/script/docker/lib/ /lint/lib/
 COPY script/*.sh /lint/
 COPY script/docker/*.sh /lint/
 RUN shellcheck -S warning /lint/*.sh /lint/lib/*.sh
+# hadolint ignore=DL3003
 RUN cd /lint && hadolint Dockerfile
 
 # Bats + extensions (from pre-built test-tools image; bats-support / bats-assert
@@ -289,8 +293,9 @@ RUN ln -sf /opt/bats/bin/bats /usr/local/bin/bats
 ENV BATS_LIB_PATH="/usr/lib/bats"
 
 # Smoke test
-COPY .base/test/smoke/test_helper.bash .base/test/smoke/script_help.bats /smoke_test/
-COPY test/smoke/ /smoke_test/
+COPY .base/dist/test/bats/smoke/shared/test_helper.bash .base/dist/test/bats/smoke/devel-test/script_help.bats /smoke_test/
+COPY test/bats/smoke/shared/ /smoke_test/
+COPY test/bats/smoke/devel-test/ /smoke_test/
 
 RUN bats /smoke_test/
 
