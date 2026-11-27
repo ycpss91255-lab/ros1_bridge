@@ -78,6 +78,6 @@ jobs:
       fail-fast: false
       matrix:
         ros2_distro: [humble, jazzy]
-    uses: ycpss91255-lab/base/.github/workflows/release-worker.yaml@v0.43.0-rc7
+    uses: ycpss91255-lab/base/.github/workflows/release-worker.yaml@v0.43.0-rc9
     with:
       archive_name_prefix: ros1_bridge-${{ matrix.ros2_distro }}
